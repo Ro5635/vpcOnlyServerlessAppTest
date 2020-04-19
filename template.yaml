@@ -13,6 +13,31 @@ Resources:
         IgnorePublicAcls: false
         RestrictPublicBuckets: false
 
+  staticSiteSourceBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref staticSiteSourceBucket
+      PolicyDocument:
+        Id: MyPolicy
+        Version: 2012-10-17
+        Statement:
+          - Action:
+              - "s3:GetObject"
+            Effect: "Allow"
+            Resource:
+              Fn::Join:
+                - ""
+                - - "arn:aws:s3:::"
+                  - Ref: "staticSiteSourceBucket"
+                  - "/*"
+            Principal:
+              AWS:
+                Fn::Join:
+                  - ""
+                  - - "arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity "
+                    - Ref: staticSiteSourceBucketOriginAccessIdentity
+                    - ""
+
   staticSiteSourceBucketOriginAccessIdentity:
     Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
     Properties:
