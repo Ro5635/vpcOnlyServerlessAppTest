@@ -69,6 +69,19 @@ Resources:
         - Key: Name
           Value: vpcCloudFrontTestProjectVPCEIP
 
+  vpcCloudFrontTestProjectVPCNAT:
+    Type: AWS::EC2::NatGateway
+    Properties:
+      AllocationId:
+        Fn::GetAtt:
+          - vpcCloudFrontTestProjectVPCEIP
+          - AllocationId
+      SubnetId:
+        Ref: vpcCloudFrontTestProjectVPCPublicSubnet
+      Tags:
+        - Key: Name
+          Value: vpcCloudFrontTestProjectVPCNAT
+
   staticSiteSourceBucket:
     Type: AWS::S3::Bucket
     Properties:
