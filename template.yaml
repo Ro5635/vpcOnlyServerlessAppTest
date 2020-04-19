@@ -82,6 +82,32 @@ Resources:
         - Key: Name
           Value: vpcCloudFrontTestProjectVPCNAT
 
+  vpcCloudFrontTestProjectVPCPrivateRoute:
+    Type: AWS::EC2::Route
+    Properties:
+      DestinationCidrBlock: '0.0.0.0/0'
+      NatGatewayId: !Ref vpcCloudFrontTestProjectVPCNAT
+      RouteTableId: !Ref vpcCloudFrontTestProjectVPCPrivateRouteTable
+
+  vpcCloudFrontTestProjectVPCPublicRoute:
+    Type: AWS::EC2::Route
+    Properties:
+      DestinationCidrBlock: '0.0.0.0/0'
+      GatewayId: !Ref vpcCloudFrontTestProjectVPCInternetGateway
+      RouteTableId: !Ref vpcCloudFrontTestProjectVPCPublicRouteTable
+
+  vpcCloudFrontTestProjectVPCPrivateRouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref vpcCloudFrontTestProjectVPCPrivateRouteTable
+      SubnetId: !Ref vpcCloudFrontTestProjectVPCPrivateSubnet
+
+  vpcCloudFrontTestProjectVPCPublicRouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref vpcCloudFrontTestProjectVPCPublicRouteTable
+      SubnetId: !Ref vpcCloudFrontTestProjectVPCPublicSubnet
+
   staticSiteSourceBucket:
     Type: AWS::S3::Bucket
     Properties:
