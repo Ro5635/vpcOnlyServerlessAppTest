@@ -13,6 +13,50 @@ Resources:
         IgnorePublicAcls: false
         RestrictPublicBuckets: false
 
+  staticSiteSourceBucketOriginAccessIdentity:
+    Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
+    Properties:
+      CloudFrontOriginAccessIdentityConfig:
+        Comment: 'staticSiteSourceBucket Origin Access Identity For CloudFront Distribution'
+
+  vpcOnlyTestDistribution:
+     Type: AWS::CloudFront::Distribution
+     Properties:
+       DistributionConfig:
+         Aliases:
+           - internal-app-test.robertcurran.uk
+         Origins:
+           - DomainName: !GetAtt [staticSiteSourceBucket, RegionalDomainName]
+             Id: 'staticSiteSourceBucketOrigin'
+             S3OriginConfig:
+               OriginAccessIdentity:
+                "Fn::Join": [ "", ["origin-access-identity/cloudfront/",
+                                  { "Ref": "staticSiteSourceBucketOriginAccessIdentity" }]]
+         Enabled: true
+         IPV6Enabled: true
+         Comment: internal app test, vpc only access test
+         DefaultRootObject: index.html
+         Logging:
+           IncludeCookies: 'false'
+           Bucket: 'logs.static.robertcurran.s3.amazonaws.com'
+           Prefix: 'vpc-cloudfront-test/CloudFront/'
+         DefaultCacheBehavior:
+           TargetOriginId: 'staticSiteSourceBucketOrigin'
+           AllowedMethods:
+             - GET
+             - HEAD
+             - OPTIONS
+           ForwardedValues:
+             QueryString: 'false'
+           ViewerProtocolPolicy: 'redirect-to-https'
+         # CloudFront price classes described at: http://aws.amazon.com/cloudfront/pricing/
+         # At time of writing Price Class 100 is EU and North America
+         PriceClass: PriceClass_100
+         ViewerCertificate:
+           AcmCertificateArn: 'arn:aws:acm:us-east-1:XXXXXXXXXXXX:certificate/YYYYYYYYYYYYYYYYYYYY'
+           MinimumProtocolVersion: 'TLSv1.2_2018'
+           SslSupportMethod: 'sni-only'
+
   someExampleAPI:
     Type: AWS::Serverless::Api
     Properties:
