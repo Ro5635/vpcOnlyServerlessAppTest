@@ -55,6 +55,12 @@ Resources:
         - Key: Name
           Value: vpcCloudFrontTestProjectVPCInternetGateway
 
+  vpcCloudFrontTestProjectVPCInternetGatewayAttachment:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      InternetGatewayId: !Ref vpcCloudFrontTestProjectVPCInternetGateway
+      VpcId: !Ref vpcCloudFrontTestProjectVPC
+
   vpcCloudFrontTestProjectVPCEIP:
     Type: AWS::EC2::EIP
     Properties:
