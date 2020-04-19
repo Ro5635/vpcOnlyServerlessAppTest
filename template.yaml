@@ -2,6 +2,52 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Resources:
 
+  vpcCloudFrontTestProjectVPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: '192.168.0.0/16'
+      EnableDnsHostnames: 'true'
+      EnableDnsSupport: 'true'
+      Tags:
+        - Key: Name
+          Value: vpcCloudFrontTestProjectVPC
+
+  vpcCloudFrontTestProjectVPCPrivateSubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      CidrBlock: '192.168.1.0/24'
+      MapPublicIpOnLaunch: 'true'
+      VpcId: !Ref vpcCloudFrontTestProjectVPC
+      Tags:
+        - Key: Name
+          Value: vpcCloudFrontTestProjectVPCPrivateSubnet
+
+  vpcCloudFrontTestProjectVPCPublicSubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      CidrBlock: '192.168.0.0/24'
+      MapPublicIpOnLaunch: 'true'
+      VpcId: !Ref vpcCloudFrontTestProjectVPC
+      Tags:
+        - Key: Name
+          Value: vpcCloudFrontTestProjectVPCPublicSubnet
+
+  vpcCloudFrontTestProjectVPCPublicRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref vpcCloudFrontTestProjectVPC
+      Tags:
+        - Key: Name
+          Value: vpcCloudFrontTestProjectVPCPublicRouteTable
+
+  vpcCloudFrontTestProjectVPCPrivateRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref vpcCloudFrontTestProjectVPC
+      Tags:
+        - Key: Name
+          Value: vpcCloudFrontTestProjectVPCPrivateRouteTable
+
   staticSiteSourceBucket:
     Type: AWS::S3::Bucket
     Properties:
