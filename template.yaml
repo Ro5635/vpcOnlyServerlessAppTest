@@ -147,7 +147,7 @@ Resources:
     Properties:
       HostedZoneConfig:
         Comment: 'vpcCloudFront Test VPC Hosted Zone'
-      Name: 'robert.internal'
+      Name: 'internal.robertcurran.uk'
       VPCs:
         - VPCId: !Ref vpcCloudFrontTestProjectVPC
           VPCRegion: !Ref "AWS::Region"
@@ -159,7 +159,7 @@ Resources:
     Properties:
       Comment: 'Internal Web App CDN CloudFront Domains'
       HostedZoneId: !Ref vpcRoute53HostedZone
-      Name: 'internal-app.robert.internal'
+      Name: 'app-test.internal.robertcurran.uk'
       ResourceRecords:
         - Fn::GetAtt:
             - vpcOnlyTestDistribution
