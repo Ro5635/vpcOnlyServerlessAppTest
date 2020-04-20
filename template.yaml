@@ -1,5 +1,11 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
+
+Mappings:
+  prod:
+    config:
+      webAppDomainName: app-test.internal.robertcurran.uk
+
 Resources:
 
   vpcCloudFrontTestProjectVPC:
@@ -159,7 +165,7 @@ Resources:
     Properties:
       Comment: 'Internal Web App CDN CloudFront Domains'
       HostedZoneId: !Ref vpcRoute53HostedZone
-      Name: 'app-test.internal.robertcurran.uk'
+      Name: !FindInMap [prod, config, webAppDomainName]
       ResourceRecords:
         - Fn::GetAtt:
             - vpcOnlyTestDistribution
@@ -214,7 +220,7 @@ Resources:
      Properties:
        DistributionConfig:
          Aliases:
-           - internal-app-test.robertcurran.uk
+           - !FindInMap [prod, config, webAppDomainName]
          Origins:
            - DomainName: !GetAtt [staticSiteSourceBucket, RegionalDomainName]
              Id: 'staticSiteSourceBucketOrigin'
