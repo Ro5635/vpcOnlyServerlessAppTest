@@ -142,6 +142,31 @@ Resources:
           ToPort: 443
           CidrIp: 0.0.0.0/0
 
+  vpcRoute53HostedZone:
+    Type: AWS::Route53::HostedZone
+    Properties:
+      HostedZoneConfig:
+        Comment: 'vpcCloudFront Test VPC Hosted Zone'
+      Name: 'robert.internal'
+      VPCs:
+        - VPCId: !Ref vpcCloudFrontTestProjectVPC
+          VPCRegion: !Ref "AWS::Region"
+
+  # You cannot create an Alias to a CloudFront Distro in a private hosted zone
+  # so this is just a direct CName record
+  vpcStaticWebAssetsCloudFrontDomain:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      Comment: 'Internal Web App CDN CloudFront Domains'
+      HostedZoneId: !Ref vpcRoute53HostedZone
+      Name: 'internal-app.robert.internal'
+      ResourceRecords:
+        - Fn::GetAtt:
+            - vpcOnlyTestDistribution
+            - DomainName
+      TTL: '300'
+      Type: 'CNAME'
+
   staticSiteSourceBucket:
     Type: AWS::S3::Bucket
     Properties:
