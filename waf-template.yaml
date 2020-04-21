@@ -1,16 +1,22 @@
+# WARNING, as Stack Exports are scoped to the region and this is in the global us-east-1 region where
+# the rest of the resources are in eu-west-1 I have just manually linked in the ARN for the
+# vpcCloudFrontTestFireWall in the cloudfront distribution in the main template,
+# this will need manual sorting to deploy...
+
+
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Resources:
 
   # WAF FIREWALLS With Scope of CloudFront Must Be Deployed to US-1!
-  vpcCIDERBlockIPSet:
+  vpcNATGatewayBlockIPSet:
     Type: AWS::WAFv2::IPSet
     Properties:
       Addresses:
-        - '192.168.0.0/16'
-      Description: 'All IPs within the VPC'
+        - '52.215.228.140/32'
+      Description: 'VPC Nat Gateway EIP'
       IPAddressVersion: 'IPV4'
-      Name: 'vpcCIDERBlockIPSet'
+      Name: 'vpNatGateWayEIPSet'
       Scope: 'CLOUDFRONT'
 
   vpcCloudFrontTestFireWall:
