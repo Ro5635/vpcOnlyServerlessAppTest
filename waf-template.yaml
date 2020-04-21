@@ -1,0 +1,42 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Resources:
+
+  # WAF FIREWALLS With Scope of CloudFront Must Be Deployed to US-1!
+  vpcCIDERBlockIPSet:
+    Type: AWS::WAFv2::IPSet
+    Properties:
+      Addresses:
+        - '192.168.0.0/16'
+      Description: 'All IPs within the VPC'
+      IPAddressVersion: 'IPV4'
+      Name: 'vpcCIDERBlockIPSet'
+      Scope: 'CLOUDFRONT'
+
+  vpcCloudFrontTestFireWall:
+    Type: AWS::WAFv2::WebACL
+    Properties:
+      DefaultAction:
+        Block: {}
+      Description: 'vpcCloudFrontTest WebACL'
+      Name: 'vpcCloudFrontTestFireWall'
+      Rules:
+        - Action:
+            Allow: {}
+          Name: 'allowRequestsFromWithinVPC'
+          Priority: 0
+          Statement:
+            IPSetReferenceStatement:
+              ARN:
+                Fn::GetAtt:
+                  - vpcCIDERBlockIPSet
+                  - Arn
+          VisibilityConfig:
+            CloudWatchMetricsEnabled: 'true'
+            MetricName: 'vpcCloudFrontTest-WAF-VPCOriginOnly'
+            SampledRequestsEnabled: 'true'
+      Scope: 'CLOUDFRONT'
+      VisibilityConfig:
+        CloudWatchMetricsEnabled: 'true'
+        MetricName: 'vpcCloudFrontTest-WAF'
+        SampledRequestsEnabled: 'true'
