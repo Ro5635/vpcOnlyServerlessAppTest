@@ -178,6 +178,30 @@ Resources:
       TTL: '300'
       Type: 'CNAME'
 
+  InternalAPIAccessSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      VpcId: !Ref vpcCloudFrontTestProjectVPC
+      GroupDescription: Opens 443
+      SecurityGroupIngress:
+        - IpProtocol: "tcp"
+          FromPort: 443
+          ToPort: 443
+          SourceSecurityGroupId: !Ref InstanceSecurityGroup
+
+  vpcAccessEndpoint:
+    Type: AWS::EC2::VPCEndpoint
+    Properties:
+      VpcId:
+        Ref: vpcCloudFrontTestProjectVPC
+      ServiceName: !Sub "com.amazonaws.${AWS::Region}.execute-api"
+      VpcEndpointType: Interface
+      PrivateDnsEnabled: true
+      SubnetIds:
+        - !Ref vpcCloudFrontTestProjectVPCPrivateSubnet
+      SecurityGroupIds:
+        - !Ref InternalAPIAccessSecurityGroup
+
   staticSiteSourceBucket:
     Type: AWS::S3::Bucket
     Properties:
