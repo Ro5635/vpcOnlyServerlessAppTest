@@ -264,6 +264,7 @@ Resources:
   someExampleAPI:
     Type: AWS::Serverless::Api
     Properties:
+      EndpointConfiguration: PRIVATE
       StageName: dev
       Cors:
         AllowHeaders: "'Authorization, content-type'"
