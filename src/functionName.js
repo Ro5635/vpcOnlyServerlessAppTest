@@ -7,7 +7,7 @@ export const handler = async (event, context) => {
 
   return {
     headers: corsHeaders,
-    body: { cake: 'good' },
+    body: JSON.stringify({ cake: 'good' }),
   };
 };
 

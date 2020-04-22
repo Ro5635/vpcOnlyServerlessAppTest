@@ -280,7 +280,7 @@ Resources:
       Description: >-
         A test function
       MemorySize: 128
-      Timeout: 60
+      Timeout: 10
       ReservedConcurrentExecutions: 10
       Environment:
         Variables:
@@ -289,6 +289,6 @@ Resources:
         Api1:
           Type: Api
           Properties:
-            RestApiId: "someExampleAPI"
+            RestApiId: !Ref someExampleAPI
             Path: /
-            Method: get
+            Method: Get
