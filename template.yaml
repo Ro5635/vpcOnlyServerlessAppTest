@@ -1,3 +1,8 @@
+# WARNING, the ClouFront Distribution linkage to the webACL WAF firewall is done
+# manually in this file as the WAF must be defined in the us-east-1 region and stack
+# exports do not work across regions. This will need manually updating to the appropriate
+# ARN when deploying this stack set for the first time...
+
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 
@@ -252,6 +257,9 @@ Resources:
            AcmCertificateArn: 'arn:aws:acm:us-east-1:XXXXXXXXXXXX:certificate/YYYYYYYYYYYYYYYYYYYY'
            MinimumProtocolVersion: 'TLSv1.2_2018'
            SslSupportMethod: 'sni-only'
+         # !!! The below webACLId manually linked to the WebACL in the WAF Stack !!!!
+         WebACLId:
+          'arn:aws:wafv2:us-east-1:000000000000000:global/webacl/vpcCloudFrontTestFireWall/AAAAAAAAAAAA🍔AAAAAAAAAAAAA'
 
   someExampleAPI:
     Type: AWS::Serverless::Api

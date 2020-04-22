@@ -35,7 +35,7 @@ Resources:
             IPSetReferenceStatement:
               ARN:
                 Fn::GetAtt:
-                  - vpcCIDERBlockIPSet
+                  - vpcNATGatewayBlockIPSet
                   - Arn
           VisibilityConfig:
             CloudWatchMetricsEnabled: 'true'
