@@ -7,7 +7,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "deploy": "ng build --prod && aws s3 sync ./dist/cake-vpc-api-demo s3://vpc-only-test-site-source --profile robertPersonalProd  --acl public-read"
   },
   "private": true,
   "dependencies": {
