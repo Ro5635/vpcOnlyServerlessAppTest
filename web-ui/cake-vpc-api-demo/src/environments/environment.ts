@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  cakeResourceURI: 'localhost:5635'
+  cakeResourceURI: '127.0.0.1:3000/'
 };
 
 /*
