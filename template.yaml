@@ -294,7 +294,7 @@ Resources:
          WebACLId:
           'arn:aws:wafv2:us-east-1:000000000000000:global/webacl/vpcCloudFrontTestFireWall/AAAAAAAAAAAA🍔AAAAAAAAAAAAA'
 
-  someExampleAPI:
+  cakesAPI:
     Type: AWS::Serverless::Api
     Properties:
       EndpointConfiguration: PRIVATE
@@ -305,10 +305,11 @@ Resources:
       Auth:
         AddDefaultAuthorizerToCorsPreflight: false # removes auth requirement from 'options' pre-flight requests
 
-  testFunction:
+
+  getCakesFunction:
     Type: 'AWS::Serverless::Function'
     Properties:
-      Handler: build/functionName.handler
+      Handler: build/cakes.handler
       Runtime: nodejs10.x
       CodeUri: .
       Description: >-
@@ -323,6 +324,6 @@ Resources:
         Api1:
           Type: Api
           Properties:
-            RestApiId: !Ref someExampleAPI
+            RestApiId: !Ref cakesAPI
             Path: /
             Method: Get
