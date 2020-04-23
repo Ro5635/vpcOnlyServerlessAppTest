@@ -8,7 +8,7 @@ import { CakeService } from "../cake.service";
   styleUrls: ['./cake-page.component.scss']
 })
 export class CakePageComponent implements OnInit {
-  cakes: Cake[] = [];
+  cakes: Cake[];
 
   constructor(private cakeService: CakeService) { }
 

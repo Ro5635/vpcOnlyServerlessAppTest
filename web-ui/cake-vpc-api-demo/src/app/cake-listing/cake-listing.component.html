@@ -1,6 +1,36 @@
+<div class="cakeListing-wrapper">
+  <div *ngIf="cakes">
 
-<div *ngIf="cakes">
-  <li *ngFor="let cake of cakes">
-  {{cake.name}} has {{cake.sugar}}g of suagar!
-  </li>
+    <mat-accordion class="cakesListing">
+
+      <mat-expansion-panel *ngFor="let cake of cakes">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{cake.name}}
+          </mat-panel-title>
+          <mat-panel-description>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <div class="metersSelector-selection_content">
+          <ul>
+            <li>
+              Taste score: {{cake.taste}}
+            </li>
+            <li>
+              Sugar Quantity: {{cake.sugar}}g
+            </li>
+          </ul>
+        </div>
+
+      </mat-expansion-panel>
+    </mat-accordion>
+
+  </div>
+  <div *ngIf="!cakes" class="loadingSpinner">
+    <mat-spinner></mat-spinner>
+    <h3>
+      Searching for your cakes
+    </h3>
+  </div>
 </div>
