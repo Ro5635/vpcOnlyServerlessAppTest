@@ -4,11 +4,13 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CakeListingComponent } from './cake-listing/cake-listing.component';
+import { CakePageComponent } from './cake-page/cake-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CakeListingComponent
+    CakeListingComponent,
+    CakePageComponent
   ],
   imports: [
     BrowserModule,
