@@ -9,6 +9,8 @@ import { CakePageComponent } from './cake-page/cake-page.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatExpansionModule } from "@angular/material/expansion";
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,8 @@ import { MatExpansionModule } from "@angular/material/expansion";
     BrowserAnimationsModule,
     MatExpansionModule,
     MatProgressSpinnerModule,
+    MatToolbarModule,
+    MatIconModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
