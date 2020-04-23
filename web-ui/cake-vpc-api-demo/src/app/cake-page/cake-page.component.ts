@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Cake } from "../Cake";
+import { CakeService } from "../cake.service";
 
 @Component({
   selector: 'app-cake-page',
@@ -9,16 +10,12 @@ import { Cake } from "../Cake";
 export class CakePageComponent implements OnInit {
   cakes: Cake[] = [];
 
-  constructor() { }
+  constructor(private cakeService: CakeService) { }
 
   ngOnInit(): void {
-    // Dummy cakes
-    this.cakes = [
-      {name: 'straw', sugar: 33, taste: 2},
-      {name: 'apple', sugar: 23, taste: 1},
-      {name: 'meat', sugar: 33, taste: 4},
-      {name: 'toffee', sugar: 43, taste: 27}
-    ]
+    this.cakeService.getCakes().subscribe(cakes => {
+      this.cakes = cakes;
+    })
   }
 
 
