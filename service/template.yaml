@@ -1,4 +1,4 @@
-# WARNING, the ClouFront Distribution linkage to the webACL WAF firewall is done
+# WARNING, the CloudFront Distribution linkage to the webACL WAF firewall is done
 # manually in this file as the WAF must be defined in the us-east-1 region and stack
 # exports do not work across regions. This will need manually updating to the appropriate
 # ARN when deploying this stack set for the first time...
