@@ -304,7 +304,13 @@ Resources:
         AllowOrigin: "'*'"
       Auth:
         AddDefaultAuthorizerToCorsPreflight: false # removes auth requirement from 'options' pre-flight requests
-
+        ResourcePolicy:
+          CustomStatements:
+            - Effect: Allow
+              Principal: "*"
+              Action: execute-api:Invoke
+          SourceVpcWhitelist:
+              !Ref vpcAccessEndpoint
 
   getCakesFunction:
     Type: 'AWS::Serverless::Function'
