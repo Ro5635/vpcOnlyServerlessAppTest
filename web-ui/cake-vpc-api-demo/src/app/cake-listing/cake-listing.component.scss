@@ -1,0 +1,17 @@
+.cakeListing-wrapper {
+  width: 80%;
+  margin: 0 auto;
+
+}
+.loadingSpinner {
+  margin: auto;
+  text-align: center;
+
+  &_text {
+    margin-top: 25px;
+  }
+
+  mat-spinner {
+    margin: auto;
+  }
+}
