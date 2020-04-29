@@ -98,3 +98,40 @@ Resources:
       CloudFrontOriginAccessIdentityConfig:
         Comment: 'staticSiteSourceBucket Origin Access Identity For CloudFront Distribution'
 
+  cakeAppWebDistribution:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Aliases:
+          - !FindInMap [prod, config, webAppDomainName]
+        Origins:
+          - DomainName: !GetAtt [staticSiteSourceBucket, RegionalDomainName]
+            Id: 'staticSiteSourceBucketOrigin'
+            S3OriginConfig:
+              OriginAccessIdentity:
+                "Fn::Join": [ "", ["origin-access-identity/cloudfront/",
+                                   { "Ref": "staticSiteSourceBucketOriginAccessIdentity" }]]
+        Enabled: true
+        IPV6Enabled: true
+        Comment: "cake app public deployment of web distribution"
+        DefaultRootObject: index.html
+        Logging:
+          IncludeCookies: 'false'
+          Bucket: 'logs.static.robertcurran.s3.amazonaws.com'
+          Prefix: 'vpc-cloudfront-test/publicDeployment/CloudFront/'
+        DefaultCacheBehavior:
+          TargetOriginId: 'staticSiteSourceBucketOrigin'
+          AllowedMethods:
+            - GET
+            - HEAD
+            - OPTIONS
+          ForwardedValues:
+            QueryString: 'false'
+          ViewerProtocolPolicy: 'redirect-to-https'
+        # CloudFront price classes described at: http://aws.amazon.com/cloudfront/pricing/
+        # At time of writing Price Class 100 is EU and North America
+        PriceClass: PriceClass_100
+        ViewerCertificate:
+          AcmCertificateArn: !ImportValue environmentStack--RobertCurranUKSSLCertificateUSEast1
+          MinimumProtocolVersion: 'TLSv1.2_2018'
+          SslSupportMethod: 'sni-only'
