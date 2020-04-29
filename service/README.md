@@ -1,10 +1,16 @@
-# Bare Minimum JS Lambda 🥦
+# VPC CloudFront Test 🥦
 
-This is some a what Minimal code setup needed to get a AWS Lambda up for testing something, this was once much more minimal, if you want the non linted, babled ES6 etc version then see the minimalNoBabel branch of this repo.
+This project creates a VPC and serverless app which is exposed only to the VPC, this involves putting a WAF in front of 
+the CloudFront Distribution, and a private API. I wanted a project to be able to play with some of the networking "things"
+within AWS and this allowed me to do that exploration on my own personal AWS account :)  
 
-This is set up as an HTTP API, the routing for the endpoints is defined within the SAM template.
+Uses AWS SAM for all the template stuffs as I prefer the developer experience of this compared to bog standard CloudFormation
+when working on non-production type stuffs.
 
-This was repo created and is maintained to be used as a common building block in my projects.
+I have made no effort to uncouple this from my AWS account, the `npm package` and `npm deploy` commands are tied 
+to my exact setup, see script source in package.json...  
+
+Built from https://github.com/Ro5635/bareminimumJSLambda as a start point.
 
 Build and lint:
 ```
