@@ -1,0 +1,50 @@
+# This Template is for the publicly accessible demo deployment at cakeinc-vpc-app.projects.robertcurran.uk
+# API: cakeinc-vpc-app-api.projects.robertcurran.uk
+# Template Contains:
+# * CloudFront Distribution
+# * S3 Source Bucket
+# * Route 53 Alias Record In robertcurran.uk Hosted Zone
+# * API Gateway
+# * Lambda and associated permissions and roles
+
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+
+Mappings:
+  prod:
+    config:
+      webAppDomainName: cakeinc-vpc-app.projects.robertcurran.uk
+
+Resources:
+
+  cakesAPI:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: prod
+      Cors:
+        AllowHeaders: "'Authorization, content-type'"
+        AllowOrigin: "'*'"
+      Auth:
+        AddDefaultAuthorizerToCorsPreflight: false # removes auth requirement from 'options' pre-flight requests
+
+  getCakesFunction:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: build/cakes.handler
+      Runtime: nodejs10.x
+      CodeUri: .
+      Description: >-
+        A test function
+      MemorySize: 128
+      Timeout: 10
+      ReservedConcurrentExecutions: 10
+      Environment:
+        Variables:
+          NODE_ENV: prod
+      Events:
+        Api1:
+          Type: Api
+          Properties:
+            RestApiId: !Ref cakesAPI
+            Path: /
+            Method: Get
