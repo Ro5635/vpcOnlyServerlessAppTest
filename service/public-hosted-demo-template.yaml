@@ -15,6 +15,7 @@ Mappings:
     config:
       webAppDomainName: cakeinc-vpc-app.projects.robertcurran.uk
       cakeAPIDomainName: cakeinc-vpc-app-api.projects.robertcurran.uk
+      staticAssettsBucketname: vpc-only-test-public-site-source
 
 Resources:
 
@@ -59,7 +60,7 @@ Resources:
     Type: AWS::S3::Bucket
     Properties:
       AccessControl: Private
-      BucketName: vpc-only-test-public-site-source
+      BucketName: !FindInMap [prod, config, staticAssettsBucketname]
       PublicAccessBlockConfiguration:
         BlockPublicAcls: false
         BlockPublicPolicy: false
