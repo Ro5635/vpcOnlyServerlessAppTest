@@ -287,12 +287,12 @@ Resources:
          # At time of writing Price Class 100 is EU and North America
          PriceClass: PriceClass_100
          ViewerCertificate:
-           AcmCertificateArn: 'arn:aws:acm:us-east-1:XXXXXXXXXXXX:certificate/YYYYYYYYYYYYYYYYYYYY'
+           AcmCertificateArn: !ImportValue environmentStack--RobertCurranUkSSLCertificateUSEast1
            MinimumProtocolVersion: 'TLSv1.2_2018'
            SslSupportMethod: 'sni-only'
          # !!! The below webACLId manually linked to the WebACL in the WAF Stack !!!!
          WebACLId:
-          'arn:aws:wafv2:us-east-1:000000000000000:global/webacl/vpcCloudFrontTestFireWall/AAAAAAAAAAAA🍔AAAAAAAAAAAAA'
+           !ImportValue environmentStack--vpcTestProject--WebACLUSEast1
 
   cakesAPI:
     Type: AWS::Serverless::Api
