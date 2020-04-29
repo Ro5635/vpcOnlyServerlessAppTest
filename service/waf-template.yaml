@@ -6,6 +6,12 @@
 
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
+
+Parameters:
+  vpcNATGatewayEIP:
+    Type: "String"
+    Description: Elastic IP of the NAT Gateway Attached to the target VPC
+
 Resources:
 
   # WAF FIREWALLS With Scope of CloudFront Must Be Deployed to US-1!
@@ -13,7 +19,7 @@ Resources:
     Type: AWS::WAFv2::IPSet
     Properties:
       Addresses:
-        - '52.215.228.140/32'
+        - !Ref vpcNATGatewayEIP
       Description: 'VPC Nat Gateway EIP'
       IPAddressVersion: 'IPV4'
       Name: 'vpNatGateWayEIPSet'
@@ -46,3 +52,5 @@ Resources:
         CloudWatchMetricsEnabled: 'true'
         MetricName: 'vpcCloudFrontTest-WAF'
         SampledRequestsEnabled: 'true'
+
+

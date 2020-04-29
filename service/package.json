@@ -11,7 +11,7 @@
     "package": "sam package --s3-bucket  robertcurran-cf-templates --s3-prefix vpc-cloudfront-test  --region eu-west-1 --output-template-file packaged.yaml --profile robertPersonalProd",
     "package-waf-template": "sam package --template-file waf-template.yaml --s3-bucket  robertcurran-cf-templates --s3-prefix vpc-cloudfront-test/waf/  --region us-east-1 --output-template-file packaged-waf.yaml --profile robertPersonalProd",
     "deploy": "sam deploy --template-file ./packaged.yaml --stack-name vpcCloudFrontTest --region eu-west-1 --capabilities CAPABILITY_IAM --profile robertPersonalProd",
-    "deploy-waf-template": "sam deploy --template-file ./packaged-waf.yaml --stack-name vpcCloudFrontTest-WAF --region us-east-1 --capabilities CAPABILITY_IAM --profile robertPersonalProd",
+    "deploy-waf-template": "sam deploy --template-file ./packaged-waf.yaml --stack-name vpcCloudFrontTest-WAF --region us-east-1 --capabilities CAPABILITY_IAM --profile robertPersonalProd --parameter-overrides vpcNATGatewayEIP=52.215.228.140/32 && echo \"Warning Parameter's Hardcoded! 😉\"",
     "publish": "npm run build && npm run package && npm run deploy && echo Finished!!",
     "publish-waf": "npm run package-waf-template && npm run deploy-waf-template && echo WAF Deploy Finished!!"
   },
