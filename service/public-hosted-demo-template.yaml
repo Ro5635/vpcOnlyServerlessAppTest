@@ -135,3 +135,16 @@ Resources:
           AcmCertificateArn: !ImportValue environmentStack--RobertCurranUKSSLCertificateUSEast1
           MinimumProtocolVersion: 'TLSv1.2_2018'
           SslSupportMethod: 'sni-only'
+
+  vpcStaticWebAssetsCloudFrontDomain:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      Type: "A"
+      Comment: 'Cake Public Web App CloudFront Distribution'
+      HostedZoneId: !ImportValue environmentStack--RobertCurranUKHostedZoneID
+      Name: !FindInMap [prod, config, webAppDomainName]
+      AliasTarget:
+        DNSName: !GetAtt [cakeAppWebDistribution, DomainName]
+        # Z2FDTNDATAQYW2 is always the hosted zone ID when you create an alias record that routes traffic to a CloudFront distribution.
+        # Because AWS is built with AWS. 🤯
+        HostedZoneId: Z2FDTNDATAQYW2
