@@ -48,3 +48,46 @@ Resources:
             RestApiId: !Ref cakesAPI
             Path: /
             Method: Get
+
+  staticSiteSourceBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      AccessControl: Private
+      BucketName: vpc-only-test-public-site-source
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: false
+        BlockPublicPolicy: false
+        IgnorePublicAcls: false
+        RestrictPublicBuckets: false
+
+  staticSiteSourceBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref staticSiteSourceBucket
+      PolicyDocument:
+        Id: MyPolicy
+        Version: 2012-10-17
+        Statement:
+          - Action:
+              - "s3:GetObject"
+            Effect: "Allow"
+            Resource:
+              Fn::Join:
+                - ""
+                - - "arn:aws:s3:::"
+                  - Ref: "staticSiteSourceBucket"
+                  - "/*"
+            Principal:
+              AWS:
+                Fn::Join:
+                  - ""
+                  - - "arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity "
+                    - Ref: staticSiteSourceBucketOriginAccessIdentity
+                    - ""
+
+  staticSiteSourceBucketOriginAccessIdentity:
+    Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
+    Properties:
+      CloudFrontOriginAccessIdentityConfig:
+        Comment: 'staticSiteSourceBucket Origin Access Identity For CloudFront Distribution'
+
