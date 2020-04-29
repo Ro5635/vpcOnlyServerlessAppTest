@@ -305,12 +305,9 @@ Resources:
       Auth:
         AddDefaultAuthorizerToCorsPreflight: false # removes auth requirement from 'options' pre-flight requests
         ResourcePolicy:
-          CustomStatements:
-            - Effect: Allow
-              Principal: "*"
-              Action: execute-api:Invoke
-          SourceVpcWhitelist:
-              !Ref vpcAccessEndpoint
+#          SourceVpcWhitelist:
+#            - !Ref vpcAccessEndpoint - 🤬 My patience to debug this is now nil, thus I have hardcoded this as a hack to get this blog written 😡
+          SourceVpcWhitelist: ["vpce-02a4c94b49b430087"]
 
   getCakesFunction:
     Type: 'AWS::Serverless::Function'
