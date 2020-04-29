@@ -14,6 +14,7 @@ Mappings:
   prod:
     config:
       webAppDomainName: cakeinc-vpc-app.projects.robertcurran.uk
+      cakeAPIDomainName: cakeinc-vpc-app-api.projects.robertcurran.uk
 
 Resources:
 
@@ -26,6 +27,11 @@ Resources:
         AllowOrigin: "'*'"
       Auth:
         AddDefaultAuthorizerToCorsPreflight: false # removes auth requirement from 'options' pre-flight requests
+      Domain:
+        DomainName: !FindInMap [prod, config, cakeAPIDomainName]
+        CertificateArn: !ImportValue environmentStack--RobertCurranUkSSLCertificateEUWest1
+        Route53:
+          HostedZoneId: !ImportValue environmentStack--RobertCurranUKHostedZoneID
 
   getCakesFunction:
     Type: 'AWS::Serverless::Function'
