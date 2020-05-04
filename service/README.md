@@ -10,6 +10,8 @@ when working on non-production type stuffs.
 I have made no effort to uncouple this from my AWS account, the `npm package` and `npm deploy` commands are tied 
 to my exact setup, see script source in package.json...  
 
+A [public deployment](https://cakeinc-vpc-app.projects.robertcurran.uk/) of this was made using [public-hosted-demo-template.yaml](https://github.com/Ro5635/vpcOnlyServerlessAppTest/blob/master/service/public-hosted-demo-template.yaml) which contains all of the infrastructure needed for a deployment to a standard CloudFront Distribution and Publicly Accessible API.
+
 Built from https://github.com/Ro5635/bareminimumJSLambda as a start point.
 
 Build and lint:
