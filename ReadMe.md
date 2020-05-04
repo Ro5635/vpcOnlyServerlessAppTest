@@ -3,6 +3,8 @@
 This is a mini project to play around with dragging a serverless app into a VPC entirely. Corona was raging, seemed 
 like a thing to do. It was the tool to allow me to write a blog.
 
+Blog that links to this repo: https://medium.com/@robertcurran5635/dragging-serverless-web-apps-into-the-vpc-d97cabd47e79
+
 This repository follows the mono-repo model and holds the service and web-ui.
 
 ## Service
