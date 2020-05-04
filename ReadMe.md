@@ -7,6 +7,9 @@ Blog that links to this repo: https://medium.com/@robertcurran5635/dragging-serv
 
 This repository follows the mono-repo model and holds the service and web-ui.
 
+A [public deployment](https://cakeinc-vpc-app.projects.robertcurran.uk/) of this was made using [public-hosted-demo-template.yaml](https://github.com/Ro5635/vpcOnlyServerlessAppTest/blob/master/service/public-hosted-demo-template.yaml) which contains all of the infrastructure needed for a deployment to a standard CloudFront Distribution and Publicly Accessible API.
+
+
 ## Service
 ### CakeAPI:
 
